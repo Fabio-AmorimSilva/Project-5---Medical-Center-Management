@@ -1,8 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalCenterManagement.Api", "MedicalCenterManagement.Api\MedicalCenterManagement.Api.csproj", "{0C43A661-97EF-477C-A773-E2522E59E5EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalCenterManagement.Domain", "MedicalCenterManagement.Domain\MedicalCenterManagement.Domain.csproj", "{5C6DA9B1-C0D7-4DDA-9056-1C36FC36BC19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalCenterManagement.Infrastructure", "MedicalCenterManagement.Infrastructure\MedicalCenterManagement.Infrastructure.csproj", "{2CB443A6-30F0-4C58-B878-8ACC957B3D76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalCenterManagement.Application", "MedicalCenterManagement.Application\MedicalCenterManagement.Application.csproj", "{3AEC4DAC-5D0A-4C90-BF11-080AD869D918}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C43A661-97EF-477C-A773-E2522E59E5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C43A661-97EF-477C-A773-E2522E59E5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C43A661-97EF-477C-A773-E2522E59E5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C43A661-97EF-477C-A773-E2522E59E5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C6DA9B1-C0D7-4DDA-9056-1C36FC36BC19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C6DA9B1-C0D7-4DDA-9056-1C36FC36BC19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C6DA9B1-C0D7-4DDA-9056-1C36FC36BC19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C6DA9B1-C0D7-4DDA-9056-1C36FC36BC19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CB443A6-30F0-4C58-B878-8ACC957B3D76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB443A6-30F0-4C58-B878-8ACC957B3D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB443A6-30F0-4C58-B878-8ACC957B3D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB443A6-30F0-4C58-B878-8ACC957B3D76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AEC4DAC-5D0A-4C90-BF11-080AD869D918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AEC4DAC-5D0A-4C90-BF11-080AD869D918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AEC4DAC-5D0A-4C90-BF11-080AD869D918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AEC4DAC-5D0A-4C90-BF11-080AD869D918}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
