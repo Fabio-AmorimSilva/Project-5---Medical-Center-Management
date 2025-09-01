@@ -2,6 +2,9 @@
 
 public class Doctor : Entity, IHasIsDeleted
 {
+    public const int NameMaxLength = 100;
+    public const int LastNameMaxLength = 150;
+    
     public string Name { get; private set; }
     public string LastName { get; private set; }
     public DateTime Birth { get; private set; }
