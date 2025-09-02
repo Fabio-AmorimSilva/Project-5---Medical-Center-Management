@@ -1,0 +1,10 @@
+﻿global using System.Reflection;
+global using MedicalCenterManagement.Application.Common.Interfaces;
+global using MedicalCenterManagement.Domain.Common;
+global using MedicalCenterManagement.Domain.Entities;
+global using MedicalCenterManagement.Infrastructure.Persistence;
+global using MedicalCenterManagement.Infrastructure.Persistence.Interceptors;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Diagnostics;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Configuration;
