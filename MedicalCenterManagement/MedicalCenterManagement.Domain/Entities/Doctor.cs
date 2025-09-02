@@ -16,6 +16,7 @@ public class Doctor : Entity, IHasIsDeleted
     public Speciality Speciality { get; private set; }
     public string Crm { get; private set; }
     public bool IsDeleted { get; set; }
+    public DateTime? DeletedAt { get; set; }
 
     private Doctor()
     {

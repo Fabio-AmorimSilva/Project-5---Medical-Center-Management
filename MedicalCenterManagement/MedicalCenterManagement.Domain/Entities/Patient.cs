@@ -2,6 +2,9 @@
 
 public class Patient : Entity, IHasIsDeleted
 {
+    public const int NameMaxLength = 100;
+    public const int LastNameMaxLength = 150;
+    
     public string Name { get; private set; }
     public string LastName { get; private set; }
     public DateTime Birth { get; private set; }
@@ -13,6 +16,7 @@ public class Patient : Entity, IHasIsDeleted
     public decimal Weight { get; private set; }
     public Address Address { get; private set; }
     public bool IsDeleted { get; set; }
+    public DateTime? DeletedAt { get; set; }
 
     public Patient(
         string name, 

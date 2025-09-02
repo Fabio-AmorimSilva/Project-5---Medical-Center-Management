@@ -13,7 +13,8 @@ public class MedicalCare : Entity, IHasIsDeleted
     public Guid ServiceId { get; private set; }
     public Service Service { get; private set; }
     public bool IsDeleted { get; set; }
-    
+    public DateTime? DeletedAt { get; set; }
+
     public MedicalCare(
         string insurance, 
         DateTime start, 
