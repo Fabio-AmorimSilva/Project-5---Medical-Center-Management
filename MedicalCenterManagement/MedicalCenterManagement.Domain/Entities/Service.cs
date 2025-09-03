@@ -23,6 +23,11 @@ public class Service : Entity, IHasIsDeleted
         int period
     )
     {
+        Guard.IsNotWhiteSpace(name);
+        Guard.IsNotWhiteSpace(description);
+        Guard.IsNotDefault(price);
+        Guard.IsNotDefault(period);
+        
         Name = name;
         Description = description;
         Price = price;

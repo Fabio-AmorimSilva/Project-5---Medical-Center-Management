@@ -25,6 +25,10 @@ public class MedicalCare : Entity, IHasIsDeleted
         Service service 
     )
     {
+        Guard.IsNotWhiteSpace(insurance);
+        Guard.IsNotDefault(start);
+        Guard.IsNotDefault(end);
+        
         Insurance = insurance;
         Start = start;
         End = end;

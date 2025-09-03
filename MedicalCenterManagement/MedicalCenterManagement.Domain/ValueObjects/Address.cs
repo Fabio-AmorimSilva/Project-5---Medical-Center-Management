@@ -6,7 +6,7 @@ public class Address : ValueObject
     public string City { get; private set; }
     public string State { get; private set; }
     public string Country { get; private set; }
-    public string ZipCode { get; set; }
+    public string ZipCode { get; private set; }
 
     public Address(
         string publicArea,
@@ -16,6 +16,12 @@ public class Address : ValueObject
         string zipCode
     )
     {
+        Guard.IsNotWhiteSpace(publicArea);
+        Guard.IsNotWhiteSpace(city);
+        Guard.IsNotWhiteSpace(state);
+        Guard.IsNotWhiteSpace(country);
+        Guard.IsNotWhiteSpace(zipCode);
+        
         PublicArea = publicArea;
         City = city;
         State = state;

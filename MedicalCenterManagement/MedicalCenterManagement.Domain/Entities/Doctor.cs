@@ -35,6 +35,16 @@ public class Doctor : Entity, IHasIsDeleted
         string crm
     )
     {
+        Guard.IsNotWhiteSpace(nameof(name));
+        Guard.IsLessThanOrEqualTo(name.Length, NameMaxLength, nameof(name));
+        Guard.IsNotWhiteSpace(lastName);
+        Guard.IsLessThanOrEqualTo(lastName.Length, LastNameMaxLength, nameof(lastName));
+        Guard.IsNotDefault(birth);
+        Guard.IsNotWhiteSpace(phoneNumber);
+        Guard.IsNotWhiteSpace(email);
+        Guard.IsNotWhiteSpace(cpf);
+        Guard.IsNotWhiteSpace(crm);
+        
         Name = name;
         LastName = lastName;
         Birth = birth;

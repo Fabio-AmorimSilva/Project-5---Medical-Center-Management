@@ -32,6 +32,17 @@ public class Patient : Entity, IHasIsDeleted
         bool isDeleted
     )
     {
+        Guard.IsNotWhiteSpace(name);
+        Guard.IsLessThanOrEqualTo(name.Length, NameMaxLength, nameof(name));
+        Guard.IsNotWhiteSpace(lastName);
+        Guard.IsLessThanOrEqualTo(lastName.Length, LastNameMaxLength, nameof(lastName));
+        Guard.IsNotDefault(birth);
+        Guard.IsNullOrWhiteSpace(phoneNumber);
+        Guard.IsNotWhiteSpace(email);
+        Guard.IsNotWhiteSpace(cpf);
+        Guard.IsNotDefault(height);
+        Guard.IsNotDefault(weight);
+        
         Name = name;
         LastName = lastName;
         Birth = birth;
