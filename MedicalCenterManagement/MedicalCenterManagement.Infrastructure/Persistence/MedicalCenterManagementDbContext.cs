@@ -1,6 +1,8 @@
 ﻿namespace MedicalCenterManagement.Infrastructure.Persistence;
 
-public class MedicalCenterManagementDbContext : DbContext, IMedicalCenterManagementDbContext
+public class MedicalCenterManagementDbContext(
+    DbContextOptions<MedicalCenterManagementDbContext> options
+) : DbContext(options), IMedicalCenterManagementDbContext
 {
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Patient> Patients { get; set; }
@@ -11,8 +13,8 @@ public class MedicalCenterManagementDbContext : DbContext, IMedicalCenterManagem
     {
         optionsBuilder.AddInterceptors(new SoftDeleteEntityInterceptor());
         base.OnConfiguring(optionsBuilder);
-    }    
-    
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
