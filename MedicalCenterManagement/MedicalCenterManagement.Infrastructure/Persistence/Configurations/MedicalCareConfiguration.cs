@@ -19,21 +19,22 @@ public class MedicalCareConfiguration : IEntityTypeConfiguration<MedicalCare>
 
         builder
             .Property(mc => mc.Start)
+            .HasPrecision(3)
             .IsRequired();
 
         builder
             .Property(mc => mc.End)
+            .HasPrecision(3)
             .IsRequired();
 
         builder
             .Property(mc => mc.TypeOfService)
             .IsRequired();
-
+        
         builder
-            .Property(mc => mc.IsDeleted)
-            .HasDefaultValue(false)
-            .IsRequired();
-
+            .Property(mc => mc.DeletedAt)
+            .HasPrecision(3);
+        
         builder
             .HasOne(mc => mc.Doctor)
             .WithMany()

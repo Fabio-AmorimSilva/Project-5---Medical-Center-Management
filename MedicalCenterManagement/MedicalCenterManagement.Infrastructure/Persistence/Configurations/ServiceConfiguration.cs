@@ -15,7 +15,7 @@ public class ServiceConfiguration : IEntityTypeConfiguration<Service>
     
         builder
             .Property(s => s.Name)
-            .HasMaxLength(Patient.NameMaxLength)
+            .HasMaxLength(Service.NameMaxLength)
             .IsRequired();
         
         builder
@@ -25,15 +25,11 @@ public class ServiceConfiguration : IEntityTypeConfiguration<Service>
 
         builder
             .Property(s => s.Price)
+            .HasPrecision(19, 4)
             .IsRequired();
 
         builder
             .Property(s => s.Period)
-            .IsRequired();
-        
-        builder
-            .Property(s => s.IsDeleted)
-            .HasDefaultValue(false)
             .IsRequired();
     }
 }
