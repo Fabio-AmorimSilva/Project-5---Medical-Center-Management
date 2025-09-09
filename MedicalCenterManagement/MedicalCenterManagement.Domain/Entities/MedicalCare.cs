@@ -15,6 +15,10 @@ public class MedicalCare : Entity, IHasIsDeleted
     public bool IsDeleted { get; set; }
     public DateTime? DeletedAt { get; set; }
 
+    private MedicalCare()
+    {
+    }
+    
     public MedicalCare(
         string insurance, 
         DateTime start, 
