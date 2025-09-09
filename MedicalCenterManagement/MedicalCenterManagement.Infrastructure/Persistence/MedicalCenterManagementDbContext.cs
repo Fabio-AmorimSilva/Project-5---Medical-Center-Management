@@ -4,6 +4,7 @@ public class MedicalCenterManagementDbContext(
     DbContextOptions<MedicalCenterManagementDbContext> options
 ) : DbContext(options), IMedicalCenterManagementDbContext
 {
+    public DbSet<Person> Persons { get; set; }
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Patient> Patients { get; set; }
     public DbSet<MedicalCare> MedicalCares { get; set; }
