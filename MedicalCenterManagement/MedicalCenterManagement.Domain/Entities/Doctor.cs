@@ -29,4 +29,15 @@ public class Doctor : Person, IHasIsDeleted
         Speciality = speciality;
         Crm = crm;
     }
+    
+    public void Update(
+        Speciality speciality,
+        string crm
+    )
+    {
+        Guard.IsNotWhiteSpace(crm);
+        
+        Speciality = speciality;
+        Crm = crm;
+    }
 }
