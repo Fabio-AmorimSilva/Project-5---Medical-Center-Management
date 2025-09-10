@@ -8,5 +8,5 @@ public interface IMedicalCenterManagementDbContext
     DbSet<MedicalCare>  MedicalCares { get; set; }
     DbSet<Service>  Services { get; set; }
     
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
