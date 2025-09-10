@@ -20,14 +20,14 @@ public class CreateDoctorCommandValidator : AbstractValidator<CreateDoctorComman
         RuleFor(command => command.Name)
             .NotEmpty()
             .WithMessage(ErrorMessages.CannotBeEmpty(nameof(CreateDoctorCommand.Name)))
-            .MaximumLength(Doctor.NameMaxLength)
-            .WithMessage(ErrorMessages.HasMaxLength(nameof(CreateDoctorCommand.Name), Doctor.NameMaxLength));
+            .MaximumLength(Person.NameMaxLength)
+            .WithMessage(ErrorMessages.HasMaxLength(nameof(CreateDoctorCommand.Name), Person.NameMaxLength));
 
         RuleFor(command => command.LastName)
             .NotEmpty()
             .WithMessage(ErrorMessages.CannotBeEmpty(nameof(CreateDoctorCommand.Name)))
-            .MaximumLength(Doctor.LastNameMaxLength)
-            .WithMessage(ErrorMessages.HasMaxLength(nameof(CreateDoctorCommand.Name), Doctor.LastNameMaxLength));
+            .MaximumLength(Person.LastNameMaxLength)
+            .WithMessage(ErrorMessages.HasMaxLength(nameof(CreateDoctorCommand.Name), Person.LastNameMaxLength));
 
         RuleFor(command => command.Birth)
             .NotEmpty()
