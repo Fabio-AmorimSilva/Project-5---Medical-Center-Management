@@ -10,4 +10,10 @@ public static class ErrorMessages
 
     public static string NotFound(string field)
         => $"{field} cannot be found";
+    
+    public static string NotFound<T>()
+        => $"{typeof(T).Name} cannot be found";
+    
+    public static string MustBeUnique(string field)
+        => $"{field} must be unique";
 }
