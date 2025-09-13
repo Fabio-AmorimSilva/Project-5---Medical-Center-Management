@@ -1,6 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddApi()
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
@@ -10,6 +11,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+
+DoctorEndpoints.Map(app);
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
