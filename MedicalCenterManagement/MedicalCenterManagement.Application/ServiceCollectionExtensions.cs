@@ -14,7 +14,7 @@ public static class ServiceCollectionExtensions
         if (assemblies is null || assemblies.Length == 0)
             assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-        services.AddSingleton<IMediator, Mediator>();
+        services.AddScoped<IMediator, Mediator>();
 
         var types = assemblies.SelectMany(a => a.GetTypes());
 
