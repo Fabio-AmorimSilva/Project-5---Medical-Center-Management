@@ -1,0 +1,11 @@
+﻿global using MedicalCenterManagement.Api.Endpoints;
+global using MedicalCenterManagement.Api.Payloads.Doctors;
+global using MedicalCenterManagement.Application.Common.Interfaces;
+global using MedicalCenterManagement.Application.Doctors.Commands.CreateDoctor;
+global using MedicalCenterManagement.Application.Doctors.Commands.DeleteDoctor;
+global using MedicalCenterManagement.Application.Doctors.Commands.UpdateDoctor;
+global using MedicalCenterManagement.Application.Doctors.Queries.GetDoctor;
+global using MedicalCenterManagement.Application.Doctors.Queries.ListDoctors;
+global using MedicalCenterManagement.Application.Models;
+global using MedicalCenterManagement.Domain.Enums;
+global using Microsoft.AspNetCore.Mvc;
