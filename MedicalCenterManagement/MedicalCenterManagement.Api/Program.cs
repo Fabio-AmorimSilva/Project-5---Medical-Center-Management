@@ -13,6 +13,7 @@ if (app.Environment.IsDevelopment())
 }
 
 DoctorEndpoints.Map(app);
+PatientEndpoints.Map(app);
 
 app.UseExceptionHandler();
 
