@@ -1,4 +1,5 @@
-﻿global using System.Reflection;
+﻿global using System.Linq.Expressions;
+global using System.Reflection;
 global using Ardalis.Specification.EntityFrameworkCore;
 global using FluentValidation;
 global using MedicalCenterManagement.Application.Common;
