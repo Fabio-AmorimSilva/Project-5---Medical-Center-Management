@@ -35,7 +35,7 @@ public class DoctorEndpoints
                 return Results.Ok(response);
             });
 
-        mapGroup.MapPut("/{doctorId:guid}",
+        mapGroup.MapPut("/{doctorId:guid}/update",
             [ProducesResponseType(typeof(Response), StatusCodes.Status204NoContent)]
             async ([FromRoute] Guid doctorId, [FromServices] IMediator mediator, [FromBody] UpdateDoctorPayload payload) =>
             {
@@ -44,7 +44,7 @@ public class DoctorEndpoints
                 return Results.NoContent();
             });
 
-        mapGroup.MapDelete("/{doctorId:guid}",
+        mapGroup.MapDelete("/{doctorId:guid}/delete",
             [ProducesResponseType(typeof(Response), StatusCodes.Status204NoContent)]
             async ([FromRoute] Guid doctorId, [FromServices] IMediator mediator) =>
             {
