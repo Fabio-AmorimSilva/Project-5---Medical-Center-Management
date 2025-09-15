@@ -14,6 +14,7 @@ if (app.Environment.IsDevelopment())
 
 DoctorEndpoints.Map(app);
 PatientEndpoints.Map(app);
+ServiceEndpoints.Map(app);
 
 app.UseExceptionHandler();
 
