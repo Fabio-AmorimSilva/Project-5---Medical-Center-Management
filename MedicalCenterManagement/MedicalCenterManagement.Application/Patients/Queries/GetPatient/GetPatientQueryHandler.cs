@@ -9,6 +9,7 @@ public class GetPatientQueryHandler(
         var filterOptions = request.FilterOptions;
 
         var patient = await context.Patients
+            .AsNoTracking()
             .WhereIf(
                 filterOptions.HasPatientId(),
                 p => p.Id == filterOptions.PatientId

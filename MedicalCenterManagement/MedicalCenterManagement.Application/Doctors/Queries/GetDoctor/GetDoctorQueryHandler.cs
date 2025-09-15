@@ -4,7 +4,9 @@ public class GetDoctorQueryHandler(IMedicalCenterManagementDbContext context) : 
 {
     public async Task<Response<GetDoctorViewModel>> Handle(GetDoctorQuery request)
     {
-        var doctor = await context.Doctors.FirstOrDefaultAsync(d => d.Id == request.DoctorId);
+        var doctor = await context.Doctors
+            .AsNoTracking()
+            .FirstOrDefaultAsync(d => d.Id == request.DoctorId);
 
         if (doctor is null)
             return new NotFoundResponse<GetDoctorViewModel>(ErrorMessages.NotFound<Doctor>());
