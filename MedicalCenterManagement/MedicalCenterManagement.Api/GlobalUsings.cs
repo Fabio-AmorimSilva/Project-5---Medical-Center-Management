@@ -2,6 +2,7 @@
 global using MedicalCenterManagement.Api.Exceptions;
 global using MedicalCenterManagement.Api.Payloads.Doctors;
 global using MedicalCenterManagement.Api.Payloads.Patients;
+global using MedicalCenterManagement.Api.Payloads.Services;
 global using MedicalCenterManagement.Application.Common.Interfaces;
 global using MedicalCenterManagement.Application.Doctors.Commands.CreateDoctor;
 global using MedicalCenterManagement.Application.Doctors.Commands.DeleteDoctor;
@@ -14,6 +15,10 @@ global using MedicalCenterManagement.Application.Patients.Commands.DeletePatient
 global using MedicalCenterManagement.Application.Patients.Commands.UpdatePatient;
 global using MedicalCenterManagement.Application.Patients.Queries.GetPatient;
 global using MedicalCenterManagement.Application.Patients.Queries.ListPatients;
+global using MedicalCenterManagement.Application.Services.Commands.CreateService;
+global using MedicalCenterManagement.Application.Services.Commands.DeleteService;
+global using MedicalCenterManagement.Application.Services.Queries.GetService;
+global using MedicalCenterManagement.Application.Services.Queries.ListServices;
 global using MedicalCenterManagement.Domain.Enums;
 global using Microsoft.AspNetCore.Diagnostics;
 global using Microsoft.AspNetCore.Mvc;
