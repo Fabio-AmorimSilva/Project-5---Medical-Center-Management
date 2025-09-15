@@ -24,7 +24,29 @@ public class Service : Entity, IHasIsDeleted
     )
     {
         Guard.IsNotWhiteSpace(name);
+        Guard.IsLessThanOrEqualTo(name.Length, NameMaxLength, nameof(name));
         Guard.IsNotWhiteSpace(description);
+        Guard.IsLessThanOrEqualTo(description.Length, DescriptionMaxLength, nameof(description));
+        Guard.IsNotDefault(price);
+        Guard.IsNotDefault(period);
+        
+        Name = name;
+        Description = description;
+        Price = price;
+        Period = period;
+    }
+
+    public void Update(
+        string name,
+        string description,
+        decimal price,
+        int period
+    )
+    {
+        Guard.IsNotWhiteSpace(name);
+        Guard.IsLessThanOrEqualTo(name.Length, NameMaxLength, nameof(name));
+        Guard.IsNotWhiteSpace(description);
+        Guard.IsLessThanOrEqualTo(description.Length, DescriptionMaxLength, nameof(description));
         Guard.IsNotDefault(price);
         Guard.IsNotDefault(period);
         
