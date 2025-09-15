@@ -1,8 +1,8 @@
 ﻿namespace MedicalCenterManagement.Domain.Specifications;
 
-public class CpfAlreadyExists : Specification<IHasCpf>
+public sealed class CpfAlreadyExistsSpec : Specification<IHasCpf>
 {
-    public CpfAlreadyExists(string cpf)
+    public CpfAlreadyExistsSpec(string cpf)
     {
         Query.Where(e => e.Cpf == cpf);
     }

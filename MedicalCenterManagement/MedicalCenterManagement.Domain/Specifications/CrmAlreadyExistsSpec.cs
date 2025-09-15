@@ -1,8 +1,8 @@
 ﻿namespace MedicalCenterManagement.Domain.Specifications;
 
-public class CrmAlreadyExists : Specification<Doctor>
+public sealed class CrmAlreadyExistsSpec : Specification<Doctor>
 {
-    public CrmAlreadyExists(Guid doctorId, string crm)
+    public CrmAlreadyExistsSpec(Guid doctorId, string crm)
     {
         Query.Where(d =>
             d.Id != doctorId &&
