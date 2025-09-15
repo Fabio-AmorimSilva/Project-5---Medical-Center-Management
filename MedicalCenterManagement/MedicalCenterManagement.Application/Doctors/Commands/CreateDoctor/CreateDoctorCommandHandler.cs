@@ -26,21 +26,21 @@ public class CreateDoctorCommandHandler(
         );
         
         var cpfAlreadyExists = await context.Persons
-            .WithSpecification(new CpfAlreadyExists(doctor.Cpf))
+            .WithSpecification(new CpfAlreadyExistsSpec(doctor.Cpf))
             .AnyAsync();
 
         if (cpfAlreadyExists)
             return new UnprocessableResponse<Guid>(ErrorMessages.MustBeUnique(nameof(doctor.Cpf)));
 
         var emailAlreadyExists = await context.Persons
-            .WithSpecification(new EmailAlreadyExists(doctor.Id, doctor.Email))
+            .WithSpecification(new EmailAlreadyExistsSpec(doctor.Id, doctor.Email))
             .AnyAsync();
 
         if (emailAlreadyExists)
             return new UnprocessableResponse<Guid>(ErrorMessages.MustBeUnique(nameof(doctor.Email)));
 
         var crmAlreadyExists = await context.Doctors
-            .WithSpecification(new CrmAlreadyExists(doctor.Id, doctor.Crm))
+            .WithSpecification(new CrmAlreadyExistsSpec(doctor.Id, doctor.Crm))
             .AnyAsync();
 
         if (crmAlreadyExists)

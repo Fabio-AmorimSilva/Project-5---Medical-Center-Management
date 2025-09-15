@@ -17,7 +17,7 @@ public class UpdateDoctorCommandHandler(
         );
 
         var crmAlreadyExists = await context.Doctors
-            .WithSpecification(new CrmAlreadyExists(doctor.Id, doctor.Crm))
+            .WithSpecification(new CrmAlreadyExistsSpec(doctor.Id, doctor.Crm))
             .AnyAsync();
 
         if (crmAlreadyExists)

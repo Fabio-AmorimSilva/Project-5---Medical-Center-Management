@@ -26,14 +26,14 @@ public class CreatePatientCommandHandler(
         );
 
         var cpfAlreadyExists = await context.Persons
-            .WithSpecification(new CpfAlreadyExists(patient.Cpf))
+            .WithSpecification(new CpfAlreadyExistsSpec(patient.Cpf))
             .AnyAsync();
 
         if (cpfAlreadyExists)
             return new UnprocessableResponse<Guid>(ErrorMessages.MustBeUnique(nameof(patient.Cpf)));
 
         var emailAlreadyExists = await context.Persons
-            .WithSpecification(new EmailAlreadyExists(patient.Id, patient.Email))
+            .WithSpecification(new EmailAlreadyExistsSpec(patient.Id, patient.Email))
             .AnyAsync();
 
         if (emailAlreadyExists)
