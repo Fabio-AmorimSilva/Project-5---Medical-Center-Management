@@ -1,6 +1,6 @@
 ﻿namespace MedicalCenterManagement.Domain.Entities;
 
-public class Person : Entity, IHasCpf, IHasIsDeleted
+public abstract class Person : Entity, IHasCpf, IHasIsDeleted
 {
     public const int NameMaxLength = 100;
     public const int LastNameMaxLength = 150;
