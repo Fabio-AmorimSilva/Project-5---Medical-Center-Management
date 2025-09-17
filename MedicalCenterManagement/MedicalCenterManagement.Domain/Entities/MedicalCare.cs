@@ -47,4 +47,33 @@ public class MedicalCare : Entity, IHasIsDeleted
         ServiceId = service.Id;
         Service = service;
     }
+    
+    public void Update(
+        string insurance, 
+        DateTime start, 
+        DateTime end, 
+        TypeOfService typeOfService,
+        Doctor doctor, 
+        Patient patient,
+        Service service 
+    )
+    {
+        Guard.IsNotWhiteSpace(insurance);
+        Guard.IsNotDefault(start);
+        Guard.IsNotDefault(end);
+        
+        Insurance = insurance;
+        Start = start;
+        End = end;
+        TypeOfService = typeOfService;
+        
+        DoctorId = doctor.Id;
+        Doctor = doctor;
+
+        PatientId = patient.Id;
+        Patient = patient;
+        
+        ServiceId = service.Id;
+        Service = service;
+    }
 }
