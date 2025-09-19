@@ -1,6 +1,6 @@
 ﻿namespace MedicalCenterManagement.Api.Endpoints;
 
-public class DoctorEndpoints
+public static class DoctorEndpoints
 {
     public static void Map(WebApplication app)
     {
@@ -8,7 +8,7 @@ public class DoctorEndpoints
 
         var mapGroup = app.MapGroup(url);
 
-        mapGroup.MapPost("/",
+        mapGroup.MapPost("/create",
             [ProducesResponseType(typeof(Response<Guid>), StatusCodes.Status200OK)]
             async ([FromServices] IMediator mediator, [FromBody] CreateDoctorCommand command) =>
             {
@@ -37,9 +37,9 @@ public class DoctorEndpoints
 
         mapGroup.MapPut("/{doctorId:guid}/update",
             [ProducesResponseType(typeof(Response), StatusCodes.Status204NoContent)]
-            async ([FromRoute] Guid doctorId, [FromServices] IMediator mediator, [FromBody] UpdateDoctorPayload payload) =>
+            async ([FromRoute] Guid doctorId, [FromServices] IMediator mediator, [FromBody] UpdateDoctorInputDto inputDto) =>
             {
-                await mediator.Publish(payload.AsCommand(doctorId));
+                await mediator.Publish(inputDto.AsCommand(doctorId));
 
                 return Results.NoContent();
             });
