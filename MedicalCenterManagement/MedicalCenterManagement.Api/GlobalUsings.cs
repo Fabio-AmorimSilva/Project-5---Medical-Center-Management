@@ -1,4 +1,5 @@
-﻿global using MedicalCenterManagement.Api.Endpoints;
+﻿global using MedicalCenterManagement.Api.Dtos.MedicalCares;
+global using MedicalCenterManagement.Api.Endpoints;
 global using MedicalCenterManagement.Api.Exceptions;
 global using MedicalCenterManagement.Api.Payloads.Doctors;
 global using MedicalCenterManagement.Api.Payloads.Patients;
@@ -9,6 +10,11 @@ global using MedicalCenterManagement.Application.Doctors.Commands.DeleteDoctor;
 global using MedicalCenterManagement.Application.Doctors.Commands.UpdateDoctor;
 global using MedicalCenterManagement.Application.Doctors.Queries.GetDoctor;
 global using MedicalCenterManagement.Application.Doctors.Queries.ListDoctors;
+global using MedicalCenterManagement.Application.MedicalCares.Commands.CreateMedicalCare;
+global using MedicalCenterManagement.Application.MedicalCares.Commands.DeleteMedicalCare;
+global using MedicalCenterManagement.Application.MedicalCares.Commands.UpdateMedicalCare;
+global using MedicalCenterManagement.Application.MedicalCares.Queries.GetMedicalCare;
+global using MedicalCenterManagement.Application.MedicalCares.Queries.ListMedicalCares;
 global using MedicalCenterManagement.Application.Models;
 global using MedicalCenterManagement.Application.Patients.Commands.CreatePatient;
 global using MedicalCenterManagement.Application.Patients.Commands.DeletePatient;
