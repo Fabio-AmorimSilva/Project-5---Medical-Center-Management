@@ -49,4 +49,7 @@ public abstract class Person : Entity, IHasCpf, IHasIsDeleted
         BloodType = bloodType;
         Address = address;
     }
+
+    public string GetFullName()
+        => $"{Name} {LastName}";
 }
