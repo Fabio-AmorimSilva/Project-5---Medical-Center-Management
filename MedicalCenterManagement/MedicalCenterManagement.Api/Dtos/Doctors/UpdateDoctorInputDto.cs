@@ -1,6 +1,6 @@
 ﻿namespace MedicalCenterManagement.Api.Payloads.Doctors;
 
-public record UpdateDoctorPayload(
+public record UpdateDoctorInputDto(
     Speciality Speciality,
     string Crm
 )

@@ -1,6 +1,6 @@
 ﻿namespace MedicalCenterManagement.Api.Payloads.Patients;
 
-public record UpdatePatientPayload(
+public record UpdatePatientInputDto(
     decimal Weight,
     decimal Height
 )
