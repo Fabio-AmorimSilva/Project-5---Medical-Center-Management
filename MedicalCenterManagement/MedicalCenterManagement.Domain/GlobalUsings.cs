@@ -1,4 +1,5 @@
-﻿global using Ardalis.Specification;
+﻿global using System.Security.Claims;
+global using Ardalis.Specification;
 global using CommunityToolkit.Diagnostics;
 global using MedicalCenterManagement.Domain.Common;
 global using MedicalCenterManagement.Domain.Entities;
