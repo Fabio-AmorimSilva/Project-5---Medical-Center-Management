@@ -6,6 +6,8 @@ public class Doctor : Person, IHasIsDeleted
     public string Crm { get; private set; }
     public bool IsDeleted { get; set; }
     public DateTime? DeletedAt { get; set; }
+    public Guid UserId { get; private set; }
+    public User User { get; private set; }
     
     private Doctor()
     {

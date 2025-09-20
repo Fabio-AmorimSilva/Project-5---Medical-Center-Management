@@ -16,5 +16,11 @@ public class PatientConfiguration : IEntityTypeConfiguration<Patient>
             .Property(p => p.Weight)
             .HasPrecision(6, 2)
             .IsRequired();
+        
+        builder
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

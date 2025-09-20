@@ -18,5 +18,11 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
         builder
             .Property(d => d.Crm)
             .IsRequired();
+        
+        builder
+            .HasOne(d => d.User)
+            .WithMany()
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
