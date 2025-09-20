@@ -21,8 +21,8 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
         
         builder
             .HasOne(d => d.User)
-            .WithMany()
-            .HasForeignKey(d => d.UserId)
+            .WithOne(d => d.Doctor)
+            .HasForeignKey<Doctor>(d => d.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
