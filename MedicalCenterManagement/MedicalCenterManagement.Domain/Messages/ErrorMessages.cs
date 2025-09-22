@@ -16,4 +16,7 @@ public static class ErrorMessages
     
     public static string MustBeUnique(string field)
         => $"{field} must be unique";
+
+    public static string InvalidEmail()
+        => $"Email is invalid";
 }
