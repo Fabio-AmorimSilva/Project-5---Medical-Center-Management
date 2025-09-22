@@ -9,6 +9,7 @@ public class MedicalCenterManagementDbContext(
     public DbSet<Patient> Patients { get; set; }
     public DbSet<MedicalCare> MedicalCares { get; set; }
     public DbSet<Service> Services { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
