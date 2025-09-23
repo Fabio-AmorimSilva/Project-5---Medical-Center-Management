@@ -16,6 +16,7 @@ DoctorEndpoints.Map(app);
 PatientEndpoints.Map(app);
 ServiceEndpoints.Map(app);
 MedicalCareEndpoints.Map(app);
+UserEndpoints.Map(app);
 
 app.UseExceptionHandler();
 
