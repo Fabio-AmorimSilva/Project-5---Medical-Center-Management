@@ -6,7 +6,8 @@ public static class ServiceEndpoints
     {
         const string url = "/api/services";
 
-        var mapGroup = app.MapGroup(url);
+        var mapGroup = app.MapGroup(url)
+            .RequireAuthorization();
 
         mapGroup.MapGet("/",
             [ProducesResponseType(typeof(Response<IEnumerable<ListServicesResponseDto>>), StatusCodes.Status200OK)]
