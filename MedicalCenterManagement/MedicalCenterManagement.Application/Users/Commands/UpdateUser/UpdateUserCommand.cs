@@ -5,7 +5,7 @@ namespace MedicalCenterManagement.Application.Users.Commands.UpdateUser;
 public record UpdateUserCommand(
     Guid UserId,
     string Email,
-    Role Role,
+    RoleDto Role,
     ProfileType ProfileType
 ) : IRequest<Response>;
 
@@ -24,8 +24,7 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
             .WithMessage(ErrorMessages.InvalidEmail());
 
         RuleFor(command => command.Role)
-            .NotEmpty()
-            .WithMessage(ErrorMessages.CannotBeEmpty(nameof(UpdateUserCommand.Role)));
+            .SetValidator(new RoleDtoValidator());
 
         RuleFor(command => command.ProfileType)
             .IsInEnum()

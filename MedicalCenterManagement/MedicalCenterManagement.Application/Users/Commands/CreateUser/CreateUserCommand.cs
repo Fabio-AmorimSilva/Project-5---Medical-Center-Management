@@ -3,7 +3,7 @@
 public record CreateUserCommand(
     string Email,
     string Password,
-    Role Role,
+    RoleDto Role,
     ProfileType ProfileType
 ) : IRequest<Response<Guid>>;
 
@@ -22,8 +22,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
             .WithMessage(ErrorMessages.CannotBeEmpty(nameof(CreateUserCommand.Password)));
         
         RuleFor(command => command.Role)
-            .NotEmpty()
-            .WithMessage(ErrorMessages.CannotBeEmpty(nameof(CreateUserCommand.Role)));
+            .SetValidator(new RoleDtoValidator());
         
         RuleFor(command => command.ProfileType)
             .IsInEnum()
