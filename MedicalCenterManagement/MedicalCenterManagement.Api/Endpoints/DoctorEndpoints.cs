@@ -7,7 +7,8 @@ public static class DoctorEndpoints
         const string url = "/api/doctors";
 
         var mapGroup = app.MapGroup(url)
-            .RequireAuthorization();
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin})
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Doctor });
 
         mapGroup.MapPost("/create",
             [ProducesResponseType(typeof(Response<Guid>), StatusCodes.Status200OK)]

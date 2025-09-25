@@ -7,7 +7,8 @@ public static class MedicalCareEndpoints
         const string url = "/api/medical-cares";
 
         var mapGroup = app.MapGroup(url)
-            .RequireAuthorization();
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin })
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Receptionist });
 
         mapGroup.MapGet("/",
             [ProducesResponseType(typeof(Response<IEnumerable<ListMedicalCaresResponseDto>>), StatusCodes.Status200OK)]

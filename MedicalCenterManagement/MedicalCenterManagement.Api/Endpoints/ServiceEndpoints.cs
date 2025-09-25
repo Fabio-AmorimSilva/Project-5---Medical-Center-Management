@@ -7,8 +7,9 @@ public static class ServiceEndpoints
         const string url = "/api/services";
 
         var mapGroup = app.MapGroup(url)
-            .RequireAuthorization();
-
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin })
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Receptionist });
+        
         mapGroup.MapGet("/",
             [ProducesResponseType(typeof(Response<IEnumerable<ListServicesResponseDto>>), StatusCodes.Status200OK)]
             async ([FromServices] IMediator mediator) =>

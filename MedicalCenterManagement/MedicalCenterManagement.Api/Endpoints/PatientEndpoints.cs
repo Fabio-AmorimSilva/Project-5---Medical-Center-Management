@@ -7,7 +7,9 @@ public static class PatientEndpoints
         const string url = "/api/patients";
 
         var mapGroup = app.MapGroup(url)
-            .RequireAuthorization();
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin })
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Receptionist })
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Patient });
 
         mapGroup.MapGet("/",
             [ProducesResponseType(typeof(Response<IEnumerable<ListPatientsResponseDto>>), StatusCodes.Status200OK)]
