@@ -33,6 +33,7 @@ global using MedicalCenterManagement.Application.Users.Commands.Login;
 global using MedicalCenterManagement.Application.Users.Commands.UpdateUser;
 global using MedicalCenterManagement.Application.Users.Queries.GetUser;
 global using MedicalCenterManagement.Application.Users.Queries.ListUsers;
+global using MedicalCenterManagement.Domain.Constants;
 global using MedicalCenterManagement.Domain.Enums;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Diagnostics;
