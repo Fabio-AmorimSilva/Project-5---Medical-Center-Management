@@ -8,6 +8,7 @@ public interface IMedicalCenterManagementDbContext
     DbSet<MedicalCare> MedicalCares { get; set; }
     DbSet<Service> Services { get; set; }
     DbSet<User> Users { get; set; }
+    DbSet<Role> Roles { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
