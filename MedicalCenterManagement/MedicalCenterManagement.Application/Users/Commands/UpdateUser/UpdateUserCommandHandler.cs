@@ -6,6 +6,14 @@ public class UpdateUserCommandHandler(
 {
     public async Task<Response> Handle(UpdateUserCommand request)
     {
+        var role = await context.Roles.FirstOrDefaultAsync(r =>
+            r.Id == request.Role.Id &&
+            r.Name == request.Role.Name
+        );
+
+        if (role is null)
+            return new NotFoundResponse<Guid>(ErrorMessages.NotFound<Role>());
+        
         var user = await context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId);
 
         if (user is null)
@@ -13,7 +21,7 @@ public class UpdateUserCommandHandler(
 
         user.Update(
             email: request.Email,
-            role: request.Role,
+            role: role,
             profileType: request.ProfileType
         );
 

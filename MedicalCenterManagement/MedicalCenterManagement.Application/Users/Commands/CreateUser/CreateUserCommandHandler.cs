@@ -7,12 +7,20 @@ public class CreateUserCommandHandler(
 {
     public async Task<Response<Guid>> Handle(CreateUserCommand request)
     {
+        var role = await context.Roles.FirstOrDefaultAsync(r =>
+            r.Id == request.Role.Id &&
+            r.Name == request.Role.Name
+        );
+
+        if (role is null)
+            return new NotFoundResponse<Guid>(ErrorMessages.NotFound<Role>());
+
         var passwordHash = passwordHashService.HashPassword(request.Password);
 
         var user = new User(
             email: request.Email,
             password: passwordHash,
-            role: request.Role,
+            role: role,
             profileType: request.ProfileType
         );
 
