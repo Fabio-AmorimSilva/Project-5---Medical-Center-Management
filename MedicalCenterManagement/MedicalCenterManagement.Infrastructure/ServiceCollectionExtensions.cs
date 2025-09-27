@@ -49,12 +49,12 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddCalendar(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddCalendar(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<GoogleCalendarSettings>(
         configuration.GetSection("GoogleCalendarSettings"));
 
-        services.AddSingleton<CalendarService>(sp =>
+        services.AddScoped(sp =>
         {
             var settings = sp.GetRequiredService<IOptions<GoogleCalendarSettings>>().Value;
 
