@@ -4,14 +4,22 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services
+            .AddDbContext(configuration)
+            .AddJwt(configuration)
+            .AddCalendar(configuration)
+            .AddSms(configuration);
+
+        services.AddScoped<IPasswordHashService, PasswordHashService>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
+    {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<MedicalCenterManagementDbContext>(options => options.UseSqlServer(connectionString));
         services.AddScoped<IMedicalCenterManagementDbContext>(provider => provider.GetRequiredService<MedicalCenterManagementDbContext>());
-        services.AddJwt(configuration);
-        services.AddCalendar(configuration);
-        services.AddScoped<ITokenService, TokenService>();
-        services.AddScoped<IPasswordHashService, PasswordHashService>();
-        services.AddScoped<ICalendarServiceWrapper, CalendarServiceWrapper>();
 
         return services;
     }
@@ -46,13 +54,15 @@ public static class ServiceCollectionExtensions
             };
         });
 
+        services.AddScoped<ITokenService, TokenService>();
+
         return services;
     }
 
     private static IServiceCollection AddCalendar(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<GoogleCalendarSettings>(
-        configuration.GetSection("GoogleCalendarSettings"));
+            configuration.GetSection("GoogleCalendarSettings"));
 
         services.AddScoped(sp =>
         {
@@ -65,7 +75,7 @@ public static class ServiceCollectionExtensions
                     ClientSecret = settings.ClientSecret
                 },
                 scopes: [CalendarService.Scope.Calendar],
-                user: "user", 
+                user: "user",
                 CancellationToken.None).Result;
 
             return new CalendarService(new BaseClientService.Initializer
@@ -74,6 +84,19 @@ public static class ServiceCollectionExtensions
                 ApplicationName = settings.ApplicationName
             });
         });
+
+        services.AddScoped<ICalendarServiceWrapper, CalendarServiceWrapper>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddSms(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<TwilioSettings>(
+            configuration.GetSection("TwilioSettings")
+        );
+
+        services.AddScoped<ISmsService, SmsService>();
 
         return services;
     }
