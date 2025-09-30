@@ -23,3 +23,6 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Options;
 global using Microsoft.IdentityModel.Tokens;
+global using Twilio;
+global using Twilio.Rest.Api.V2010.Account;
+global using Twilio.Types;

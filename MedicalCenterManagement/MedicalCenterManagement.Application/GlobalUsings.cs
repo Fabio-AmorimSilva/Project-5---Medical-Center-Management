@@ -17,3 +17,4 @@ global using MedicalCenterManagement.Domain.Utils;
 global using MedicalCenterManagement.Domain.ValueObjects;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
+global using Twilio.Rest.Api.V2010.Account;
