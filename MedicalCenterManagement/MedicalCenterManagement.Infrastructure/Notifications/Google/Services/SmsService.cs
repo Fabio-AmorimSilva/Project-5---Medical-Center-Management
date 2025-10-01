@@ -13,12 +13,12 @@ public class SmsService : ISmsService
         );
     }
 
-    public async Task SendMessage(string toPhoneNumber, string message)
+    public async Task SendMessage(string phoneNumber, string message)
     {
         await MessageResource.CreateAsync(
             body: message,
             from: new PhoneNumber(_twilioSettings.PhoneNumber),
-            to: new PhoneNumber(toPhoneNumber)
+            to: new PhoneNumber(phoneNumber)
         );
     }
 }

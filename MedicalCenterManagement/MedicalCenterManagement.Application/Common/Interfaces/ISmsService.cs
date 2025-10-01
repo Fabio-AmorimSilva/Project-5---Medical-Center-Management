@@ -2,5 +2,5 @@
 
 public interface ISmsService
 {
-    Task SendMessage(string toPhoneNumber, string message);
+    Task SendMessage(string phoneNumber, string message);
 }
