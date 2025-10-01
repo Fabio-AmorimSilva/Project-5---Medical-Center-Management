@@ -1,0 +1,136 @@
+﻿namespace FinancialGoalsManager.Infrastructure.EventBusRabbitMq;
+
+public class RabbitMqPersistentConnection : IPersistentConnection
+{
+    private readonly IConnectionFactory _connectionFactory;
+    private readonly TimeSpan _timeoutBeforeReconnecting;
+
+    private IConnection _connection;
+    private bool _disposed;
+
+    private readonly SpinLock _locker = new();
+
+    private readonly ILogger<RabbitMqPersistentConnection> _logger;
+
+    private bool _connectionFailed;
+
+    public RabbitMqPersistentConnection(
+        IConnectionFactory connectionFactory,
+        ILogger<RabbitMqPersistentConnection> logger
+    )
+    {
+        _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+        _logger = logger;
+    }
+
+    public event EventHandler OnReconnectedAfterConnectionFailure;
+
+    public bool IsConnected => _connection is not null && _connection.IsOpen && !_disposed;
+
+    public bool TryConnect()
+    {
+        _logger.LogInformation("Trying to connect to RabbitMQ...");
+        
+        var policy = Policy
+            .Handle<SocketException>()
+            .Or<BrokerUnreachableException>()
+            .WaitAndRetryForever((_) => _timeoutBeforeReconnecting,
+                (ex, time) =>
+                {
+                    _logger.LogWarning(ex, "RabbitMQ Client could not connect after {TimeOut} seconds ({ExceptionMessage}). Waiting to try again...",
+                        $"{(int)time.TotalSeconds}", ex.Message);
+                });
+
+        policy.Execute(() => { _connection = _connectionFactory.CreateConnection(); });
+
+        if (!IsConnected)
+        {
+            _connectionFailed = true;
+            return false;
+        }
+
+        _connection.ConnectionShutdown += OnConnectionShutdown;
+        _connection.CallbackException += OnCallbackException;
+        _connection.ConnectionBlocked += OnConnectionBlocked;
+        _connection.ConnectionUnblocked += OnConnectionUnblocked;
+
+        _logger.LogInformation("RabbitMQ Client acquired a persistent connection to '{HostName}' and is subscribed to failure events",
+            _connection.Endpoint.HostName);
+
+        if (_connectionFailed)
+        {
+            OnReconnectedAfterConnectionFailure?.Invoke(this, null);
+            _connectionFailed = false;
+        }
+
+        return true;
+    }
+
+    public IModel CreateModel()
+    {
+        if (!IsConnected)
+            throw new InvalidOperationException("No RabbitMQ connections are available to perform this action.");
+
+        return _connection.CreateModel();
+    }
+
+    public void Dispose()
+    {
+        if (_disposed)
+            return;
+
+        _disposed = true;
+
+        try
+        {
+            _connection.Dispose();
+        }
+        catch (IOException ex)
+        {
+            _logger.LogCritical(ex.ToString());
+        }
+    }
+
+    private void OnCallbackException(object sender, CallbackExceptionEventArgs args)
+    {
+        _connectionFailed = true;
+
+        _logger.LogWarning("A RabbitMQ connection throw exception. Trying to re-connect...");
+        TryConnectIfNotDisposed();
+    }
+
+    private void OnConnectionShutdown(object sender, ShutdownEventArgs args)
+    {
+        _connectionFailed = true;
+
+        _logger.LogWarning("A RabbitMQ connection is on shutdown. Trying to re-connect...");
+        TryConnectIfNotDisposed();
+    }
+
+    private void OnConnectionBlocked(object sender, ConnectionBlockedEventArgs args)
+    {
+        _connectionFailed = true;
+
+        _logger.LogWarning("A RabbitMQ connection is blocked. Trying to re-connect...");
+        TryConnectIfNotDisposed();
+    }
+
+    private void OnConnectionUnblocked(object sender, EventArgs args)
+    {
+        _connectionFailed = true;
+
+        _logger.LogWarning("A RabbitMQ connection is unblocked. Trying to re-connect...");
+        TryConnectIfNotDisposed();
+    }
+
+    private void TryConnectIfNotDisposed()
+    {
+        if (_disposed)
+        {
+            _logger.LogInformation("RabbitMQ client is disposed. No action will be taken.");
+            return;
+        }
+
+        TryConnect();
+    }
+}

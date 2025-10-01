@@ -1,5 +1,9 @@
 var builder = WebApplication.CreateBuilder(args);
 
+builder
+    .AddUserProvider()
+    .AddRabbitMq(builder.Configuration);
+
 builder.Services
     .AddApi()
     .AddApplication()
@@ -19,6 +23,8 @@ MedicalCareEndpoints.Map(app);
 UserEndpoints.Map(app);
 
 app.UseExceptionHandler();
+
+app.ConfigureEventBusHandlers();
 
 app.UseHttpsRedirection();
 

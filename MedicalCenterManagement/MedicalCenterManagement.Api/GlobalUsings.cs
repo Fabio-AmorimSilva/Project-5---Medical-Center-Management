@@ -1,4 +1,10 @@
-﻿global using MedicalCenterManagement.Api.Dtos.MedicalCares;
+﻿global using Autofac;
+global using Autofac.Extensions.DependencyInjection;
+global using FinancialGoalsManager.Domain.EventBus;
+global using FinancialGoalsManager.Domain.EventBus.Subscriptions;
+global using FinancialGoalsManager.Infrastructure.EventBus.InMemory;
+global using FinancialGoalsManager.Infrastructure.EventBusRabbitMq;
+global using MedicalCenterManagement.Api.Dtos.MedicalCares;
 global using MedicalCenterManagement.Api.Dtos.Users;
 global using MedicalCenterManagement.Api.Endpoints;
 global using MedicalCenterManagement.Api.Exceptions;
@@ -38,3 +44,4 @@ global using MedicalCenterManagement.Domain.Enums;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Diagnostics;
 global using Microsoft.AspNetCore.Mvc;
+global using RabbitMQ.Client;
