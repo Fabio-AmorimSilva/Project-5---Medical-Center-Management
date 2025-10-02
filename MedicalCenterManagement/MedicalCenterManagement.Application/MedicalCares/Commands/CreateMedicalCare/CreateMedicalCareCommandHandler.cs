@@ -1,7 +1,8 @@
 ﻿namespace MedicalCenterManagement.Application.MedicalCares.Commands.CreateMedicalCare;
 
 public class CreateMedicalCareCommandHandler(
-    IMedicalCenterManagementDbContext context
+    IMedicalCenterManagementDbContext context,
+    IEventBus eventBus
 ) : IHandler<CreateMedicalCareCommand, Response<Guid>>
 {
     public async Task<Response<Guid>> Handle(CreateMedicalCareCommand request)
@@ -34,6 +35,14 @@ public class CreateMedicalCareCommandHandler(
         await context.MedicalCares.AddAsync(medicalCare);
         await context.SaveChangesAsync();
 
+        eventBus.Publish(new MedicalCareCreatedIntegrationEvent(
+            doctorPhoneNumber: doctor.PhoneNumber,
+            patientPhoneNumber: patient.PhoneNumber,
+            message: "Service confirmed!!",
+            start: medicalCare.Start,
+            end: medicalCare.End
+        ));
+        
         return new CreatedResponse<Guid>(medicalCare.Id);
     }
 }
