@@ -1,4 +1,4 @@
-﻿namespace MedicalCenterManagement.Infrastructure.Notifications.Google.Dtos;
+﻿namespace MedicalCenterManagement.Infrastructure.Notifications.Sms.Dtos;
 
 public record TwilioSettings
 {
