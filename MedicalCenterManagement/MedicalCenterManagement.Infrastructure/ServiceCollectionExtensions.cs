@@ -8,14 +8,15 @@ public static class ServiceCollectionExtensions
             .AddDbContext(configuration)
             .AddJwt(configuration)
             .AddCalendar(configuration)
-            .AddSms(configuration);
+            .AddSms(configuration)
+            .AddAzureBlobStorage(configuration);
 
         services.AddScoped<IPasswordHashService, PasswordHashService>();
 
         return services;
     }
 
-    public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<MedicalCenterManagementDbContext>(options => options.UseSqlServer(connectionString));
@@ -98,6 +99,17 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<ISmsService, SmsService>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddAzureBlobStorage(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddScoped<IFileStorageService>(_ =>
+            new AzureBlobStorageService(
+                connectionString: configuration["AzureBlobStorageSettings:ConnectionString"],
+                containerName: configuration["AzureBlobStorageSettings:ContainerName"]
+        ));
+        
         return services;
     }
 }

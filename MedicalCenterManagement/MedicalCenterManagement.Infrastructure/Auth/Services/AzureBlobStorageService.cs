@@ -1,27 +1,49 @@
 ﻿using Azure.Storage.Blobs;
-using MedicalCenterManagement.Domain.Interfaces;
+using Azure.Storage.Blobs.Models;
 
 namespace MedicalCenterManagement.Infrastructure.Auth.Services;
 
-public class AzureBlobStorageService(
-    IOptions<AzureBlobStorageSettings> options,    
-    BlobContainerClient containerClient
-) : IFileStorageService
+public class AzureBlobStorageService : IFileStorageService
 {
-    private readonly AzureBlobStorageSettings _azureBlobStorageSettings = options.Value;
+    private readonly BlobContainerClient _blobContainerClient;
     
-    public Task<string> UploadAsync(Stream stream, string fileName, string contentType)
+    public AzureBlobStorageService(
+        string? connectionString,
+        string? containerName
+    )
     {
-        throw new NotImplementedException();
+        _blobContainerClient = new BlobContainerClient(
+            connectionString: connectionString,
+            blobContainerName: containerName
+        );
+        
+        _blobContainerClient.CreateIfNotExists(PublicAccessType.Blob);
+    }
+    
+    public async Task<string> UploadAsync(Stream stream, string fileName, string contentType)
+    {
+        var blobClient = _blobContainerClient.GetBlobClient(fileName);
+        var headers = new BlobHttpHeaders
+        {
+            ContentType = contentType
+        };
+        await blobClient.UploadAsync(stream, headers);
+        
+        return blobClient.Uri.ToString();
     }
 
-    public Task<Stream> DownloadAsync(string fileName)
+    public async Task<Stream> DownloadAsync(string fileName)
     {
-        throw new NotImplementedException();
+        var blobClient = _blobContainerClient.GetBlobClient(fileName);
+        var download = await blobClient.DownloadAsync();
+        
+        return download.Value.Content;
     }
 
     public Task DeleteAsync(string fileName)
     {
-        throw new NotImplementedException();
+        var blobClient = _blobContainerClient.GetBlobClient(fileName);
+        
+        return blobClient.DeleteAsync();
     }
 }
