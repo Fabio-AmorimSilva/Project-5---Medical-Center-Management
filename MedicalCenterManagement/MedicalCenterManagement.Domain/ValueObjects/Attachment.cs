@@ -5,7 +5,7 @@ public class Attachment : ValueObject
     public string Name { get; private set; }
     public string ContentType { get; private set; }
     public long Size { get; private set; }
-    public DateTime UploadedAt { get; private set; }
+    public AttachmentType Type { get; private set; }
 
     private Attachment()
     {
@@ -14,13 +14,14 @@ public class Attachment : ValueObject
     public Attachment(
         string name,
         string contentType,
-        long size
+        long size,
+        AttachmentType type
     )
     {
         Name = name;
         ContentType = contentType;
         Size = size;
-        UploadedAt = DateTime.UtcNow;
+        Type = type;
     }
     
     protected override IEnumerable<object> GetEqualityComponents()
@@ -28,5 +29,6 @@ public class Attachment : ValueObject
         yield return Name;
         yield return ContentType;
         yield return Size;
+        yield return Type;
     }
 }
