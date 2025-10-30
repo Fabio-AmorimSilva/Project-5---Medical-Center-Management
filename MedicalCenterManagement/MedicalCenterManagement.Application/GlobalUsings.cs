@@ -12,6 +12,7 @@ global using MedicalCenterManagement.Application.IntegrationEvents.Events;
 global using MedicalCenterManagement.Application.Models;
 global using MedicalCenterManagement.Domain.Entities;
 global using MedicalCenterManagement.Domain.Enums;
+global using MedicalCenterManagement.Domain.Interfaces;
 global using MedicalCenterManagement.Domain.Messages;
 global using MedicalCenterManagement.Domain.Specifications;
 global using MedicalCenterManagement.Domain.Utils;

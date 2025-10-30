@@ -37,5 +37,8 @@ global using Twilio;
 global using Twilio.Rest.Api.V2010.Account;
 global using Twilio.Types;
 global using System.Threading;
+global using Azure.Storage.Blobs;
+global using Azure.Storage.Blobs.Models;
+global using MedicalCenterManagement.Domain.Interfaces;
 global using MedicalCenterManagement.Infrastructure.Notifications.Sms.Dtos;
 global using Policy = Polly.Policy;

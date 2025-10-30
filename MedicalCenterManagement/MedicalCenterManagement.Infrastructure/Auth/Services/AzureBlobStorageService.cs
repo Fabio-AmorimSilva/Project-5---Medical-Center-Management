@@ -1,7 +1,4 @@
-﻿using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-
-namespace MedicalCenterManagement.Infrastructure.Auth.Services;
+﻿namespace MedicalCenterManagement.Infrastructure.Auth.Services;
 
 public class AzureBlobStorageService : IFileStorageService
 {
