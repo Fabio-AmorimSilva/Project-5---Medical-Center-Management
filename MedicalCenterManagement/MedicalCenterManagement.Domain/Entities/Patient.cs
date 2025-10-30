@@ -8,6 +8,9 @@ public class Patient : Person, IHasIsDeleted
     public DateTime? DeletedAt { get; set; }
     public Guid UserId { get; private set; }
     public User User { get; private set; }
+    
+    private readonly List<Attachment> _attachments = [];
+    public IReadOnlyCollection<Attachment> Attachments => _attachments;
 
     private Patient()
     {
@@ -44,4 +47,10 @@ public class Patient : Person, IHasIsDeleted
         Height = height;
         Weight = weight;
     }
+    
+    public void AddAttachments(IReadOnlySet<Attachment> attachments)
+        => _attachments.AddRange(attachments);
+
+    public void DeleteAttachment(Attachment attachment)
+        => _attachments.Remove(attachment);
 }

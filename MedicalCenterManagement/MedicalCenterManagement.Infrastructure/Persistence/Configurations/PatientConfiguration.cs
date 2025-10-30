@@ -17,6 +17,29 @@ public class PatientConfiguration : IEntityTypeConfiguration<Patient>
             .HasPrecision(6, 2)
             .IsRequired();
         
+        builder.OwnsMany(p => p.Attachments, attachmentBuilder =>
+        {
+            attachmentBuilder
+                .Property<Guid>("Id")
+                .ValueGeneratedOnAdd();
+            
+            attachmentBuilder
+                .Property(att => att.Name)
+                .IsRequired();
+            
+            attachmentBuilder
+                .Property(att => att.ContentType)
+                .IsRequired();
+            
+            attachmentBuilder
+                .Property(att => att.Size)
+                .IsRequired();
+            
+            attachmentBuilder
+                .Property(att => att.Type)
+                .IsRequired();
+        });
+        
         builder
             .HasOne(p => p.User)
             .WithOne(u => u.Patient)

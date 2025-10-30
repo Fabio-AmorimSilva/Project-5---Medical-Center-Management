@@ -19,6 +19,29 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
             .Property(d => d.Crm)
             .IsRequired();
         
+        builder.OwnsMany(d => d.Attachments, attachmentBuilder =>
+        {
+            attachmentBuilder
+                .Property<Guid>("Id")
+                .ValueGeneratedOnAdd();
+            
+            attachmentBuilder
+                .Property(att => att.Name)
+                .IsRequired();
+            
+            attachmentBuilder
+                .Property(att => att.ContentType)
+                .IsRequired();
+            
+            attachmentBuilder
+                .Property(att => att.Size)
+                .IsRequired();
+            
+            attachmentBuilder
+                .Property(att => att.Type)
+                .IsRequired();
+        });
+        
         builder
             .HasOne(d => d.User)
             .WithOne(d => d.Doctor)

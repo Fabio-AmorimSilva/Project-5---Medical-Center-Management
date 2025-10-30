@@ -8,7 +8,10 @@ public class Doctor : Person, IHasIsDeleted
     public DateTime? DeletedAt { get; set; }
     public Guid UserId { get; private set; }
     public User User { get; private set; }
-    
+
+    private readonly List<Attachment> _attachments = [];
+    public IReadOnlyCollection<Attachment> Attachments => _attachments;
+
     private Doctor()
     {
     }
@@ -16,30 +19,36 @@ public class Doctor : Person, IHasIsDeleted
     public Doctor(
         Speciality speciality,
         string crm,
-        string name, 
+        string name,
         string lastName,
-        DateTime birth, 
-        string phoneNumber, 
-        string email, 
-        string cpf, 
-        BloodType bloodType, 
+        DateTime birth,
+        string phoneNumber,
+        string email,
+        string cpf,
+        BloodType bloodType,
         Address address
     ) : base(name, lastName, birth, phoneNumber, email, cpf, bloodType, address)
     {
         Guard.IsNotWhiteSpace(crm);
-        
+
         Speciality = speciality;
         Crm = crm;
     }
-    
+
     public void Update(
         Speciality speciality,
         string crm
     )
     {
         Guard.IsNotWhiteSpace(crm);
-        
+
         Speciality = speciality;
         Crm = crm;
     }
+
+    public void AddAttachments(IReadOnlySet<Attachment> attachments)
+        => _attachments.AddRange(attachments);
+
+    public void DeleteAttachment(Attachment attachment)
+        => _attachments.Remove(attachment);
 }
