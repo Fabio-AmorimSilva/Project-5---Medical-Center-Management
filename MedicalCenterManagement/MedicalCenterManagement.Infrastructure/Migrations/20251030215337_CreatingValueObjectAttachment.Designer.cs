@@ -4,6 +4,7 @@ using MedicalCenterManagement.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalCenterManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(MedicalCenterManagementDbContext))]
-    partial class MedicalCenterManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251030215337_CreatingValueObjectAttachment")]
+    partial class CreatingValueObjectAttachment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
