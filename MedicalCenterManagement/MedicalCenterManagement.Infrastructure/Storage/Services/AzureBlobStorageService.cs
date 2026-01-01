@@ -1,4 +1,4 @@
-﻿namespace MedicalCenterManagement.Infrastructure.Auth.Services;
+﻿namespace MedicalCenterManagement.Infrastructure.Storage.Services;
 
 public class AzureBlobStorageService : IFileStorageService
 {
