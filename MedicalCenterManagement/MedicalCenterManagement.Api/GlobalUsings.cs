@@ -18,6 +18,8 @@ global using MedicalCenterManagement.Application.Doctors.Commands.DeleteDoctor;
 global using MedicalCenterManagement.Application.Doctors.Commands.UpdateDoctor;
 global using MedicalCenterManagement.Application.Doctors.Queries.GetDoctor;
 global using MedicalCenterManagement.Application.Doctors.Queries.ListDoctors;
+global using MedicalCenterManagement.Application.IntegrationEvents.EventHandling;
+global using MedicalCenterManagement.Application.IntegrationEvents.Events;
 global using MedicalCenterManagement.Application.MedicalCares.Commands.CreateMedicalCare;
 global using MedicalCenterManagement.Application.MedicalCares.Commands.DeleteMedicalCare;
 global using MedicalCenterManagement.Application.MedicalCares.Commands.UpdateMedicalCare;
