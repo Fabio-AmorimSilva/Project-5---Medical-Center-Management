@@ -2,30 +2,33 @@
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApi(this IServiceCollection services)
+    extension(IServiceCollection services)
     {
-        services
-            .AddGlobalExceptionHandler()
-            .AddProblemDetailsService();
-        
-        return services;
-    }
-
-    private static void AddProblemDetailsService(this IServiceCollection services)
-    {
-        services.AddProblemDetails(configure =>
+        public IServiceCollection AddApi()
         {
-            configure.CustomizeProblemDetails = context =>
-            {
-                context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
-            };
-        });
-    }
-
-    private static IServiceCollection AddGlobalExceptionHandler(this IServiceCollection services)
-    {
-        services.AddExceptionHandler<GlobalExceptionHandler>();
+            services
+                .AddGlobalExceptionHandler()
+                .AddProblemDetailsService();
         
-        return services;
+            return services;
+        }
+
+        private void AddProblemDetailsService()
+        {
+            services.AddProblemDetails(configure =>
+            {
+                configure.CustomizeProblemDetails = context =>
+                {
+                    context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
+                };
+            });
+        }
+
+        private IServiceCollection AddGlobalExceptionHandler()
+        {
+            services.AddExceptionHandler<GlobalExceptionHandler>();
+        
+            return services;
+        }
     }
 }
