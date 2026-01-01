@@ -2,9 +2,7 @@
 
 public class Attachment : ValueObject
 {
-    public string Name { get; private set; }
-    public string ContentType { get; private set; }
-    public long Size { get; private set; }
+    public string Path { get; private set; }
     public AttachmentType Type { get; private set; }
 
     private Attachment()
@@ -12,23 +10,17 @@ public class Attachment : ValueObject
     } 
 
     public Attachment(
-        string name,
-        string contentType,
-        long size,
+        string path,
         AttachmentType type
     )
     {
-        Name = name;
-        ContentType = contentType;
-        Size = size;
+        Path = path;
         Type = type;
     }
     
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return Name;
-        yield return ContentType;
-        yield return Size;
+        yield return Path;
         yield return Type;
     }
 }

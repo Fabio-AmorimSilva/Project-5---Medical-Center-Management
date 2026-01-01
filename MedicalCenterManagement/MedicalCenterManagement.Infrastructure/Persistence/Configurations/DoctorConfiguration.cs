@@ -26,15 +26,7 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
                 .ValueGeneratedOnAdd();
             
             attachmentBuilder
-                .Property(att => att.Name)
-                .IsRequired();
-            
-            attachmentBuilder
-                .Property(att => att.ContentType)
-                .IsRequired();
-            
-            attachmentBuilder
-                .Property(att => att.Size)
+                .Property(att => att.Path)
                 .IsRequired();
             
             attachmentBuilder
