@@ -17,7 +17,7 @@ namespace MedicalCenterManagement.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.20")
+                .HasAnnotation("ProductVersion", "10.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -353,16 +353,9 @@ namespace MedicalCenterManagement.Infrastructure.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<string>("ContentType")
+                            b1.Property<string>("Path")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<long>("Size")
-                                .HasColumnType("bigint");
 
                             b1.Property<int>("Type")
                                 .HasColumnType("int");
@@ -403,16 +396,9 @@ namespace MedicalCenterManagement.Infrastructure.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<string>("ContentType")
+                            b1.Property<string>("Path")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<long>("Size")
-                                .HasColumnType("bigint");
 
                             b1.Property<int>("Type")
                                 .HasColumnType("int");
