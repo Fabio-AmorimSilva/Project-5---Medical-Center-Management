@@ -22,7 +22,8 @@ public class CreatePatientCommandHandler(
                 zipCode: request.Address.ZipCode
             ),
             weight: request.Weight,
-            height: request.Height
+            height: request.Height,
+            userId: request.UserId
         );
 
         var cpfAlreadyExists = await context.Persons

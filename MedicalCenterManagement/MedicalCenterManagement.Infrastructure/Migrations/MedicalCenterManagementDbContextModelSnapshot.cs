@@ -134,15 +134,9 @@ namespace MedicalCenterManagement.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Roles", (string)null);
                 });
@@ -206,6 +200,8 @@ namespace MedicalCenterManagement.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users", (string)null);
                 });
@@ -319,15 +315,15 @@ namespace MedicalCenterManagement.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MedicalCenterManagement.Domain.Entities.Role", b =>
+            modelBuilder.Entity("MedicalCenterManagement.Domain.Entities.User", b =>
                 {
-                    b.HasOne("MedicalCenterManagement.Domain.Entities.User", "User")
-                        .WithOne("Role")
-                        .HasForeignKey("MedicalCenterManagement.Domain.Entities.Role", "UserId")
+                    b.HasOne("MedicalCenterManagement.Domain.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("MedicalCenterManagement.Domain.Entities.Doctor", b =>
@@ -421,9 +417,6 @@ namespace MedicalCenterManagement.Infrastructure.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
-
-                    b.Navigation("Role")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

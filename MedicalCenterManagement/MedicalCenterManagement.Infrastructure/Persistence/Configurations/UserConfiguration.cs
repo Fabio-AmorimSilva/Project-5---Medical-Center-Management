@@ -24,5 +24,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder
             .Property(u => u.ProfileType)
             .IsRequired();
+        
+        builder
+            .HasOne(u => u.Role)
+            .WithMany()
+            .HasForeignKey(u => u.RoleId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

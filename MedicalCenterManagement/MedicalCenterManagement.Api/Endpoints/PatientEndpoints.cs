@@ -1,4 +1,6 @@
-﻿namespace MedicalCenterManagement.Api.Endpoints;
+﻿using MedicalCenterManagement.Domain.Interfaces;
+
+namespace MedicalCenterManagement.Api.Endpoints;
 
 public static class PatientEndpoints
 {
@@ -6,10 +8,10 @@ public static class PatientEndpoints
     {
         const string url = "/api/patients";
 
-        var mapGroup = app.MapGroup(url)
-            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin })
-            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Receptionist })
-            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Patient });
+        var mapGroup = app.MapGroup(url);
+            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin })
+            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Receptionist })
+            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Patient });
 
         mapGroup.MapGet("/",
             [ProducesResponseType(typeof(Response<IEnumerable<ListPatientsResponseDto>>), StatusCodes.Status200OK)]
@@ -22,7 +24,7 @@ public static class PatientEndpoints
 
         mapGroup.MapGet("/patient",
             [ProducesResponseType(typeof(Response<Guid>), StatusCodes.Status200OK)]
-            async ([FromServices] IMediator mediator, [FromRoute] GetPatientFilterOptions filter) =>
+            async ([FromServices] IMediator mediator, [AsParameters] GetPatientFilterOptions filter) =>
             {
                 var response = await mediator.Publish(new GetPatientQuery(filter));
 
@@ -59,14 +61,23 @@ public static class PatientEndpoints
         mapGroup.MapPut("/{patientId:guid}/update-attachments",
             [ProducesResponseType(typeof(Response), StatusCodes.Status204NoContent)]
             async (
-                [FromServices] IMediator mediator, 
-                [FromRoute] Guid patientId, 
-                [FromBody] UpdatePatientAttachmentCommand command
+                [FromServices] IMediator mediator,
+                [FromServices] IFileStorageService fileStorageService,
+                [FromRoute] Guid patientId,
+                IFormFile file
             ) =>
             {
+                using var stream = file.OpenReadStream();
+                var uploadedPath = await fileStorageService.UploadAsync(file.FileName, stream);
+
+                var attachment = new AttachmentDto(uploadedPath, AttachmentType.SickNote);
+
+                var command = new UpdatePatientAttachmentCommand(patientId, [attachment]);
+
                 await mediator.Publish(command with { PatientId = patientId });
 
                 return Results.NoContent();
-            });
+            })
+            .DisableAntiforgery();
     }
 }

@@ -9,22 +9,47 @@ public class AzureBlobStorageService : IFileStorageService
         string? containerName
     )
     {
-        _blobContainerClient = new BlobContainerClient(
-            connectionString: connectionString,
-            blobContainerName: containerName
-        );
-        
-        _blobContainerClient.CreateIfNotExists(PublicAccessType.Blob);
+        if (string.IsNullOrWhiteSpace(connectionString))
+            throw new ArgumentNullException(nameof(connectionString), "Azure Blob Storage connection string is required");
+
+        if (string.IsNullOrWhiteSpace(containerName))
+            throw new ArgumentNullException(nameof(containerName), "Azure Blob Storage container name is required");
+
+        try
+        {
+            _blobContainerClient = new BlobContainerClient(
+                connectionString: connectionString,
+                blobContainerName: containerName
+            );
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(
+                $"Failed to initialize Azure Blob Storage client. ConnectionString: {(string.IsNullOrEmpty(connectionString) ? "NULL" : "PROVIDED")}, ContainerName: {containerName}",
+                ex
+            );
+        }
     }
     
     public async Task<string> UploadAsync(string path)
     {
         var blobClient = _blobContainerClient.GetBlobClient(path);
-        
+
         var stream = new MemoryStream();
-        
+
         await blobClient.UploadAsync(stream);
-        
+
+        return blobClient.Uri.ToString();
+    }
+
+    public async Task<string> UploadAsync(string fileName, Stream fileStream)
+    {
+        await _blobContainerClient.CreateIfNotExistsAsync();
+
+        var blobClient = _blobContainerClient.GetBlobClient(fileName);
+
+        await blobClient.UploadAsync(fileStream, overwrite: true);
+
         return blobClient.Uri.ToString();
     }
 

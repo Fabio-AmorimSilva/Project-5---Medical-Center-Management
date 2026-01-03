@@ -1,8 +1,7 @@
 ﻿namespace MedicalCenterManagement.Application.Patients.Commands.UpdatePatientAttachment;
 
 public class UpdatePatientAttachmentCommandHandler(
-    IMedicalCenterManagementDbContext context,
-    IEventBus eventBus
+    IMedicalCenterManagementDbContext context
 ) : IHandler<UpdatePatientAttachmentCommand, Response>
 {
     public async Task<Response> Handle(UpdatePatientAttachmentCommand request)
@@ -11,18 +10,15 @@ public class UpdatePatientAttachmentCommandHandler(
 
         if (patient is null)
             return new NotFoundResponse<Patient>(ErrorMessages.NotFound<Patient>());
-        
+
         var attachments = request.Attachments.Select(att => new Attachment(
             path: att.Path,
             type: att.Type
         )).ToHashSet();
 
         patient.AddAttachments(attachments);
-        
-        await context.SaveChangesAsync();
 
-        foreach (var attachment in attachments)
-            eventBus.Publish(new AttachmentCreatedIntegrationEvent(attachment.Path));
+        await context.SaveChangesAsync();
 
         return new NoContentResponse();
     }

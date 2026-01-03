@@ -10,7 +10,8 @@ public record CreatePatientCommand(
     BloodType BloodType,
     AddressDto Address,
     decimal Height,
-    decimal Weight
+    decimal Weight,
+    Guid UserId
 ) : IRequest<Response<Guid>>;
 
 public class CreatePatientCommandValidator : AbstractValidator<CreatePatientCommand>

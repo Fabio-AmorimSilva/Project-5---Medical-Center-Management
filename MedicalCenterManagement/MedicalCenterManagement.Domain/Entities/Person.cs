@@ -36,7 +36,7 @@ public abstract class Person : Entity, IHasCpf, IHasIsDeleted
         Guard.IsNotWhiteSpace(lastName);
         Guard.IsLessThanOrEqualTo(lastName.Length, LastNameMaxLength, nameof(lastName));
         Guard.IsNotDefault(birth);
-        Guard.IsNullOrWhiteSpace(phoneNumber);
+        Guard.IsNotNullOrWhiteSpace(phoneNumber);
         Guard.IsNotWhiteSpace(email);
         Guard.IsNotWhiteSpace(cpf);
 

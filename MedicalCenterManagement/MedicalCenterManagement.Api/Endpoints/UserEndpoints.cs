@@ -6,11 +6,11 @@ public class UserEndpoints
     {
         const string url = "/api/users";
 
-        var mapGroup = app.MapGroup(url)
-            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin })
-            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Receptionist })
-            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Patient })
-            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Doctor });
+        var mapGroup = app.MapGroup(url);
+            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin })
+            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Receptionist })
+            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Patient })
+            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Doctor });
 
         mapGroup.MapGet("/login",
             [ProducesResponseType(typeof(Response<GetUserResponseDto>), StatusCodes.Status200OK)]

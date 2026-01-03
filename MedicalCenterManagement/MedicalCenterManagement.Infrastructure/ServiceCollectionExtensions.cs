@@ -2,34 +2,31 @@
 
 public static class ServiceCollectionExtensions
 {
-    extension(IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        public IServiceCollection AddInfrastructure(IConfiguration configuration)
-        {
-            services
-                .AddDbContext(configuration)
-                .AddJwt(configuration)
-                .AddCalendar(configuration)
-                .AddSms(configuration)
-                .AddAzureBlobStorage(configuration);
+        services
+            .AddDbContext(configuration)
+            .AddJwt(configuration)
+            .AddCalendar(configuration)
+            .AddSms(configuration)
+            .AddAzureBlobStorage(configuration);
 
-            services.AddScoped<IPasswordHashService, PasswordHashService>();
+        services.AddScoped<IPasswordHashService, PasswordHashService>();
 
-            return services;
-        }
+        return services;
+    }
 
-        private IServiceCollection AddDbContext(IConfiguration configuration)
-        {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MedicalCenterManagementDbContext>(options => options.UseSqlServer(connectionString));
-            services.AddScoped<IMedicalCenterManagementDbContext>(provider => provider.GetRequiredService<MedicalCenterManagementDbContext>());
+    private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        services.AddDbContext<MedicalCenterManagementDbContext>(options => options.UseSqlServer(connectionString));
+        services.AddScoped<IMedicalCenterManagementDbContext>(provider => provider.GetRequiredService<MedicalCenterManagementDbContext>());
 
-            return services;
-        }
+        return services;
+    }
 
-        private IServiceCollection AddJwt(IConfiguration configuration
-        )
-        {
+    private static IServiceCollection AddJwt(this IServiceCollection services, IConfiguration configuration)
+    {
             var jwtSettings = configuration.GetSection("JwtSettings");
             services.Configure<JwtSettingsDto>(jwtSettings);
 
@@ -60,8 +57,8 @@ public static class ServiceCollectionExtensions
             return services;
         }
 
-        private IServiceCollection AddCalendar(IConfiguration configuration)
-        {
+    private static IServiceCollection AddCalendar(this IServiceCollection services, IConfiguration configuration)
+    {
             services.Configure<GoogleCalendarSettings>(
                 configuration.GetSection("GoogleCalendarSettings"));
 
@@ -91,8 +88,8 @@ public static class ServiceCollectionExtensions
             return services;
         }
 
-        private IServiceCollection AddSms(IConfiguration configuration)
-        {
+    private static IServiceCollection AddSms(this IServiceCollection services, IConfiguration configuration)
+    {
             services.Configure<TwilioSettings>(
                 configuration.GetSection("TwilioSettings")
             );
@@ -102,15 +99,14 @@ public static class ServiceCollectionExtensions
             return services;
         }
 
-        private IServiceCollection AddAzureBlobStorage(IConfiguration configuration)
-        {
+    private static IServiceCollection AddAzureBlobStorage(this IServiceCollection services, IConfiguration configuration)
+    {
             services.AddScoped<IFileStorageService>(_ =>
                 new AzureBlobStorageService(
                     connectionString: configuration["AzureBlobStorageSettings:ConnectionString"],
                     containerName: configuration["AzureBlobStorageSettings:ContainerName"]
                 ));
         
-            return services;
-        }
+        return services;
     }
 }

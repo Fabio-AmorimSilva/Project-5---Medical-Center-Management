@@ -16,11 +16,5 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder
             .Property(r => r.Name)
             .IsRequired();
-        
-        builder
-            .HasOne(r => r.User)
-            .WithOne(u => u.Role)
-            .HasForeignKey<Role>(r => r.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -26,12 +26,14 @@ public class Patient : Person, IHasIsDeleted
         string email, 
         string cpf, 
         BloodType bloodType, 
-        Address address
+        Address address,
+        Guid userId
     ) : base(name, lastName, birth, phoneNumber, email, cpf, bloodType, address)
     {
         Guard.IsNotDefault(height);
         Guard.IsNotDefault(weight);
         
+        UserId = userId;
         Height = height;
         Weight = weight;
     }
