@@ -5,7 +5,7 @@ public class RabbitMqPersistentConnection : IPersistentConnection
     private readonly IConnectionFactory _connectionFactory;
     private readonly TimeSpan _timeoutBeforeReconnecting;
 
-    private IConnection _connection;
+    private IConnection _connection = null!;
     private bool _disposed;
 
     private readonly SpinLock _locker = new();
@@ -23,7 +23,7 @@ public class RabbitMqPersistentConnection : IPersistentConnection
         _logger = logger;
     }
 
-    public event EventHandler OnReconnectedAfterConnectionFailure;
+    public event EventHandler OnReconnectedAfterConnectionFailure = null!;
 
     public bool IsConnected => _connection is not null && _connection.IsOpen && !_disposed;
 

@@ -2,7 +2,7 @@
 
 public interface IFileStorageService
 {
-    Task<string> UploadAsync(Stream stream, string fileName, string contentType);
-    Task<Stream> DownloadAsync(string fileName);
-    Task DeleteAsync(string fileName);
+    Task<string> UploadAsync(string path);
+    Task<Stream> DownloadAsync(string path);
+    Task DeleteAsync(string path);
 }

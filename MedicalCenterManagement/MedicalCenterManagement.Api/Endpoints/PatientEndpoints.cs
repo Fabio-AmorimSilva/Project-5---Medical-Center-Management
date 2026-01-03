@@ -55,5 +55,18 @@ public static class PatientEndpoints
 
                 return Results.NoContent();
             });
+        
+        mapGroup.MapPut("/{patientId:guid}/update-attachments",
+            [ProducesResponseType(typeof(Response), StatusCodes.Status204NoContent)]
+            async (
+                [FromServices] IMediator mediator, 
+                [FromRoute] Guid patientId, 
+                [FromBody] UpdatePatientAttachmentCommand command
+            ) =>
+            {
+                await mediator.Publish(command with { PatientId = patientId });
+
+                return Results.NoContent();
+            });
     }
 }

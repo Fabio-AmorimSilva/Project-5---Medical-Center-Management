@@ -14,7 +14,7 @@ public class Attachment : ValueObject
         AttachmentType type
     )
     {
-        Path = path;
+        Path = $"{Guid.NewGuid()}/{path}";
         Type = type;
     }
     

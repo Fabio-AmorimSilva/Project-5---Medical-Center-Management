@@ -2,18 +2,12 @@
 
 public record AttachmentCreatedIntegrationEvent : IntegrationEvent
 {
-    public Stream File { get; init; }
-    public string Name { get; init; } = null!;
-    public string ContentType { get; set; }
+    public string Path { get; init; } = null!;
 
     public AttachmentCreatedIntegrationEvent(
-        Stream file,
-        string name,
-        string contentType
+        string path
     )
     {
-        File = file;
-        Name = name;
-        ContentType = contentType;
+        Path = path;
     }
 }

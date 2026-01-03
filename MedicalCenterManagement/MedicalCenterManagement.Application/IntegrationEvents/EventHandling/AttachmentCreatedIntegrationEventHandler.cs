@@ -6,9 +6,7 @@ public class AttachmentCreatedIntegrationEventHandler(IFileStorageService fileSt
     public async Task HandleAsync(AttachmentCreatedIntegrationEvent @event)
     {
         await fileStorageService.UploadAsync(
-            stream: @event.File,
-            fileName: @event.Name,
-            contentType: @event.ContentType
+            path: @event.Path
         );
     }
 }

@@ -17,29 +17,29 @@ public class AzureBlobStorageService : IFileStorageService
         _blobContainerClient.CreateIfNotExists(PublicAccessType.Blob);
     }
     
-    public async Task<string> UploadAsync(Stream stream, string fileName, string contentType)
+    public async Task<string> UploadAsync(string path)
     {
-        var blobClient = _blobContainerClient.GetBlobClient(fileName);
-        var headers = new BlobHttpHeaders
-        {
-            ContentType = contentType
-        };
-        await blobClient.UploadAsync(stream, headers);
+        var blobClient = _blobContainerClient.GetBlobClient(path);
+        
+        var stream = new MemoryStream();
+        
+        await blobClient.UploadAsync(stream);
         
         return blobClient.Uri.ToString();
     }
 
-    public async Task<Stream> DownloadAsync(string fileName)
+    public async Task<Stream> DownloadAsync(string path)
     {
-        var blobClient = _blobContainerClient.GetBlobClient(fileName);
+        var blobClient = _blobContainerClient.GetBlobClient(path);
+        
         var download = await blobClient.DownloadAsync();
         
         return download.Value.Content;
     }
 
-    public Task DeleteAsync(string fileName)
+    public Task DeleteAsync(string path)
     {
-        var blobClient = _blobContainerClient.GetBlobClient(fileName);
+        var blobClient = _blobContainerClient.GetBlobClient(path);
         
         return blobClient.DeleteAsync();
     }

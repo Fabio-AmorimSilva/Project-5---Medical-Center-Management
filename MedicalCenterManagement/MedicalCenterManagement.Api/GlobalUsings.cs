@@ -29,6 +29,7 @@ global using MedicalCenterManagement.Application.Models;
 global using MedicalCenterManagement.Application.Patients.Commands.CreatePatient;
 global using MedicalCenterManagement.Application.Patients.Commands.DeletePatient;
 global using MedicalCenterManagement.Application.Patients.Commands.UpdatePatient;
+global using MedicalCenterManagement.Application.Patients.Commands.UpdatePatientAttachment;
 global using MedicalCenterManagement.Application.Patients.Queries.GetPatient;
 global using MedicalCenterManagement.Application.Patients.Queries.ListPatients;
 global using MedicalCenterManagement.Application.Services.Commands.CreateService;
