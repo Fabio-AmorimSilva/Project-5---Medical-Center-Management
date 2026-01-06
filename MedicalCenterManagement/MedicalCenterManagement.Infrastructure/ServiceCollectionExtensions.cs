@@ -2,31 +2,34 @@
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    extension(IServiceCollection services)
     {
-        services
-            .AddDbContext(configuration)
-            .AddJwt(configuration)
-            .AddCalendar(configuration)
-            .AddSms(configuration)
-            .AddAzureBlobStorage(configuration);
+        public IServiceCollection AddInfrastructure(IConfiguration configuration)
+        {
+            services
+                .AddDbContext(configuration)
+                .AddJwt(configuration)
+                .AddCalendar(configuration)
+                .AddSms(configuration)
+                .AddAzureBlobStorage(configuration)
+                .AddCaching(configuration);
 
-        services.AddScoped<IPasswordHashService, PasswordHashService>();
+            services.AddScoped<IPasswordHashService, PasswordHashService>();
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
-    {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
-        services.AddDbContext<MedicalCenterManagementDbContext>(options => options.UseSqlServer(connectionString));
-        services.AddScoped<IMedicalCenterManagementDbContext>(provider => provider.GetRequiredService<MedicalCenterManagementDbContext>());
+        private IServiceCollection AddDbContext(IConfiguration configuration)
+        {
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<MedicalCenterManagementDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddScoped<IMedicalCenterManagementDbContext>(provider => provider.GetRequiredService<MedicalCenterManagementDbContext>());
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddJwt(this IServiceCollection services, IConfiguration configuration)
-    {
+        private IServiceCollection AddJwt(IConfiguration configuration)
+        {
             var jwtSettings = configuration.GetSection("JwtSettings");
             services.Configure<JwtSettingsDto>(jwtSettings);
 
@@ -57,8 +60,8 @@ public static class ServiceCollectionExtensions
             return services;
         }
 
-    private static IServiceCollection AddCalendar(this IServiceCollection services, IConfiguration configuration)
-    {
+        private IServiceCollection AddCalendar(IConfiguration configuration)
+        {
             services.Configure<GoogleCalendarSettings>(
                 configuration.GetSection("GoogleCalendarSettings"));
 
@@ -88,8 +91,8 @@ public static class ServiceCollectionExtensions
             return services;
         }
 
-    private static IServiceCollection AddSms(this IServiceCollection services, IConfiguration configuration)
-    {
+        private IServiceCollection AddSms(IConfiguration configuration)
+        {
             services.Configure<TwilioSettings>(
                 configuration.GetSection("TwilioSettings")
             );
@@ -99,14 +102,41 @@ public static class ServiceCollectionExtensions
             return services;
         }
 
-    private static IServiceCollection AddAzureBlobStorage(this IServiceCollection services, IConfiguration configuration)
-    {
+        private IServiceCollection AddAzureBlobStorage(IConfiguration configuration)
+        {
             services.AddScoped<IFileStorageService>(_ =>
                 new AzureBlobStorageService(
                     connectionString: configuration["AzureBlobStorageSettings:ConnectionString"],
                     containerName: configuration["AzureBlobStorageSettings:ContainerName"]
                 ));
         
-        return services;
+            return services;
+        }
+        
+        private IServiceCollection AddCaching(IConfiguration configuration)
+        {
+            var provider = configuration.GetValue<string>("Caching:Provider");
+
+            if (provider == "Redis")
+            {
+                var connectionString = configuration.GetValue<string>("Caching:Redis:ConnectionString");
+                var instanceName = configuration.GetValue<string>("Caching:Redis:InstanceName");
+
+                services.AddStackExchangeRedisCache(options =>
+                {
+                    options.Configuration = connectionString;
+                    options.InstanceName = instanceName;
+
+                    services.AddScoped<ICacheService, RedisCacheService>();
+                });
+            }
+            else
+            {
+                services.AddMemoryCache();
+                services.AddScoped<ICacheService, MemoryCacheService>();
+            }
+
+            return services;
+        }
     }
 }
