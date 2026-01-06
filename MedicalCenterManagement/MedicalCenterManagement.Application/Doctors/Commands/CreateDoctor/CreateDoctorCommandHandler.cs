@@ -1,7 +1,8 @@
 ﻿namespace MedicalCenterManagement.Application.Doctors.Commands.CreateDoctor;
 
 public class CreateDoctorCommandHandler(
-    IMedicalCenterManagementDbContext context
+    IMedicalCenterManagementDbContext context,
+    ICacheService cacheService
 ) : IHandler<CreateDoctorCommand, Response<Guid>>
 {
     public async Task<Response<Guid>> Handle(CreateDoctorCommand request)
@@ -48,6 +49,8 @@ public class CreateDoctorCommandHandler(
 
         await context.Doctors.AddAsync(doctor);
         await context.SaveChangesAsync();
+
+        await cacheService.RemoveAsync("doctors:all");
 
         return new CreatedResponse<Guid>(doctor.Id);
     }
