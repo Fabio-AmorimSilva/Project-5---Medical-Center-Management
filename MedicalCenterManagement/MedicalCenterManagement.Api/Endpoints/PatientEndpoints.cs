@@ -80,5 +80,18 @@ public static class PatientEndpoints
                 return Results.NoContent();
             })
             .DisableAntiforgery();
+        
+        mapGroup.MapGet("/{patientId:guid}/download-attachment",
+            [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
+            async (
+                [FromRoute] Guid patientId,
+                [FromQuery] string path,
+                [FromServices] IMediator mediator
+            ) =>
+            {
+                var response = await mediator.Publish(new GetPatientAttachmentQuery(PatientId: patientId, Path: path));
+                
+                return Results.File(response.Data, "image/jpeg");
+            });
     }
 }
