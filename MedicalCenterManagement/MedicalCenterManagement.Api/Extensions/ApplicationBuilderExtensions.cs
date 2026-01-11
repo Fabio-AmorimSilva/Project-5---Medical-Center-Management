@@ -6,7 +6,6 @@ public static class ApplicationBuilderExtensions
     {
         var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
         
-        eventBus.Subscribe<AttachmentCreatedIntegrationEvent, AttachmentCreatedIntegrationEventHandler>();
         eventBus.Subscribe<MedicalCareCreatedIntegrationEvent, MedicalCareCreatedIntegrationEventHandler>();
     }
 }
