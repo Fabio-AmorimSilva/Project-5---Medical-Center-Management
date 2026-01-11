@@ -14,12 +14,11 @@ public class RedisCacheService : ICacheService
             PropertyNameCaseInsensitive = true
         };
     }
-    
-    
+
     public async Task<T?> GetAsync<T>(string key)
     {
         var value = await _distributedCache.GetStringAsync(key);
-        
+
         return string.IsNullOrWhiteSpace(value) ? default : JsonSerializer.Deserialize<T>(value, _jsonSerializerOptions);
     }
 
@@ -31,7 +30,7 @@ public class RedisCacheService : ICacheService
         {
             AbsoluteExpirationRelativeToNow = expirationTime
         };
-        
+
         await _distributedCache.SetStringAsync(key, JsonSerializer.Serialize(value, _jsonSerializerOptions), options);
     }
 

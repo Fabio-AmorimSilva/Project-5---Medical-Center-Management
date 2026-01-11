@@ -67,7 +67,8 @@ public static class PatientEndpoints
                 IFormFile file
             ) =>
             {
-                using var stream = file.OpenReadStream();
+                await using var stream = file.OpenReadStream();
+                
                 var uploadedPath = await fileStorageService.UploadAsync(file.FileName, stream);
 
                 var attachment = new AttachmentDto(uploadedPath, AttachmentType.SickNote);
