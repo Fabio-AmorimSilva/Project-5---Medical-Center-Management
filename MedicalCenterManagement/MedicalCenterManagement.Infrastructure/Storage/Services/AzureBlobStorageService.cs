@@ -48,7 +48,7 @@ public class AzureBlobStorageService : IFileStorageService
 
         var blobClient = _blobContainerClient.GetBlobClient(fileName);
 
-        await blobClient.UploadAsync(fileStream, overwrite: true);
+        await blobClient.UploadAsync(fileStream);
 
         return blobClient.Uri.ToString();
     }
@@ -57,9 +57,13 @@ public class AzureBlobStorageService : IFileStorageService
     {
         var blobClient = _blobContainerClient.GetBlobClient(path);
         
-        var download = await blobClient.DownloadAsync();
+        var stream = new MemoryStream();
         
-        return download.Value.Content;
+        await blobClient.DownloadToAsync(stream);
+        
+        stream.Position = 0;
+
+        return stream;
     }
 
     public Task DeleteAsync(string path)
