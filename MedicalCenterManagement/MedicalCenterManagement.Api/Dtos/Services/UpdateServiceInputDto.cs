@@ -1,6 +1,4 @@
-﻿using MedicalCenterManagement.Application.Services.Commands.UpdateService;
-
-namespace MedicalCenterManagement.Api.Payloads.Services;
+﻿namespace MedicalCenterManagement.Api.Dtos.Services;
 
 public record UpdateServiceInputDto(
     string Name,
