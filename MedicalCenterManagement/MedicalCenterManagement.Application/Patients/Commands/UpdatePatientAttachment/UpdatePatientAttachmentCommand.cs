@@ -2,7 +2,8 @@
 
 public record UpdatePatientAttachmentCommand(
     Guid PatientId, 
-    IEnumerable<AttachmentDto> Attachments
+    AttachmentDto Attachment,
+    Stream Stream
 ) : IRequest<Response>;
 
 public class UpdatePatientAttachmentCommandValidator : AbstractValidator<UpdatePatientAttachmentCommand>
@@ -13,7 +14,7 @@ public class UpdatePatientAttachmentCommandValidator : AbstractValidator<UpdateP
             .NotEmpty()
             .WithMessage(ErrorMessages.CannotBeEmpty(nameof(UpdatePatientAttachmentCommand.PatientId)));
 
-        RuleForEach(command => command.Attachments)
+        RuleFor(command => command.Attachment)
             .SetValidator(new AttachmentDtoValidator());
     }
 }
