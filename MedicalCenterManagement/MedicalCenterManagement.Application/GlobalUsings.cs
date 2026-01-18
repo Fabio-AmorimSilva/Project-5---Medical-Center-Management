@@ -8,6 +8,7 @@ global using MedicalCenterManagement.Application.Common;
 global using MedicalCenterManagement.Application.Common.Dtos;
 global using MedicalCenterManagement.Application.Common.Interfaces;
 global using MedicalCenterManagement.Application.Common.Responses;
+global using MedicalCenterManagement.Application.Doctors.Commands.UpdateDoctorAttachment;
 global using MedicalCenterManagement.Application.IntegrationEvents.Events;
 global using MedicalCenterManagement.Application.Models;
 global using MedicalCenterManagement.Domain.Entities;
