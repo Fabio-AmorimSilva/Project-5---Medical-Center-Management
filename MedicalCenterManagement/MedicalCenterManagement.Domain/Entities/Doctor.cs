@@ -46,9 +46,14 @@ public class Doctor : Person, IHasIsDeleted
         Crm = crm;
     }
 
-    public void AddAttachments(IReadOnlySet<Attachment> attachments)
-        => _attachments.AddRange(attachments);
+    public void AddAttachment(Attachment attachment)
+        => _attachments.Add(attachment);
 
     public void DeleteAttachment(Attachment attachment)
         => _attachments.Remove(attachment);
+    
+    public string? GetAttachment(string path)
+    {
+        return _attachments.FirstOrDefault(att => att.Path == path)?.Path;
+    }
 }

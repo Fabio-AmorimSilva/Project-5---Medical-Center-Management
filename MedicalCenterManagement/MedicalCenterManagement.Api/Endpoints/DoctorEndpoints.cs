@@ -54,5 +54,39 @@ public static class DoctorEndpoints
 
                 return Results.NoContent();
             });
+
+        mapGroup.MapPut("/{doctorId:guid}/update-attachment",
+            [ProducesResponseType(typeof(Response), StatusCodes.Status204NoContent)]
+            async (
+                [FromServices] IMediator mediator,
+                [FromRoute] Guid doctorId,
+                IFormFile file
+            ) =>
+            {
+                var stream = new MemoryStream();
+
+                await file.CopyToAsync(stream);
+
+                stream.Position = 0;
+
+                var attachment = new AttachmentDto(file.FileName, AttachmentType.Prescription);
+
+                await mediator.Publish(new UpdateDoctorAttachmentCommand(doctorId, attachment, stream));
+
+                return Results.NoContent();
+            });
+        
+        mapGroup.MapGet("/{doctorId:guid}/download-attachment",
+            [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
+            async (
+                [FromRoute] Guid doctorId,
+                [FromQuery] string path,
+                [FromServices] IMediator mediator
+            ) =>
+            {
+                var response = await mediator.Publish(new GetDoctorAttachmentQuery(doctorId, path));
+                
+                return Results.File(response.Data, "image/jpeg");
+            });
     }
 }
