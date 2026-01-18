@@ -1,6 +1,4 @@
-﻿using MedicalCenterManagement.Domain.Interfaces;
-
-namespace MedicalCenterManagement.Api.Endpoints;
+﻿namespace MedicalCenterManagement.Api.Endpoints;
 
 public static class PatientEndpoints
 {
@@ -8,10 +6,10 @@ public static class PatientEndpoints
     {
         const string url = "/api/patients";
 
-        var mapGroup = app.MapGroup(url);
-            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin })
-            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Receptionist })
-            // .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Patient });
+        var mapGroup = app.MapGroup(url)
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Admin })
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Receptionist })
+            .RequireAuthorization(new AuthorizeAttribute { Roles = Roles.Patient });
 
         mapGroup.MapGet("/",
             [ProducesResponseType(typeof(Response<IEnumerable<ListPatientsResponseDto>>), StatusCodes.Status200OK)]
@@ -62,18 +60,19 @@ public static class PatientEndpoints
             [ProducesResponseType(typeof(Response), StatusCodes.Status204NoContent)]
             async (
                 [FromServices] IMediator mediator,
-                [FromServices] IFileStorageService fileStorageService,
                 [FromRoute] Guid patientId,
                 IFormFile file
             ) =>
             {
-                await using var stream = file.OpenReadStream();
+                var stream = new MemoryStream();
                 
-                var uploadedPath = await fileStorageService.UploadAsync(file.FileName, stream);
+                await file.CopyToAsync(stream);
+                
+                stream.Position = 0;
+                
+                var attachment = new AttachmentDto(file.FileName, AttachmentType.SickNote);
 
-                var attachment = new AttachmentDto(uploadedPath, AttachmentType.SickNote);
-
-                var command = new UpdatePatientAttachmentCommand(patientId, [attachment]);
+                var command = new UpdatePatientAttachmentCommand(patientId, attachment, stream);
 
                 await mediator.Publish(command with { PatientId = patientId });
 
