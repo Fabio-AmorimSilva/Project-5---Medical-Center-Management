@@ -19,7 +19,7 @@ Tecnologias utilizadas:
 Funcionalidades:
 - Permite cadastro, atualização, remoção e adição de anexos para pacientes
 - Permite cadastro, atualização, remoção e adição de anexos para médicos dos tipos: receita, pedido médico e evolução
-- Permote cadastro, atualização e remoção de consultas médicas
+- Permite cadastro, atualização e remoção de consultas médicas
 - Permite cadastro, atualização e remoção de usuários
 
 <a href="https://github.com/Fabio-AmorimSilva/Project-5---Medical-Center-Management?tab=readme-ov-file">
