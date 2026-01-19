@@ -31,17 +31,7 @@ public class AzureBlobStorageService : IFileStorageService
         }
     }
     
-    public async Task<string> UploadAsync(string path)
-    {
-        var blobClient = _blobContainerClient.GetBlobClient(path);
-
-        var stream = new MemoryStream();
-
-        await blobClient.UploadAsync(stream);
-
-        return blobClient.Uri.ToString();
-    }
-
+    
     public async Task<string> UploadAsync(string fileName, Stream fileStream)
     {
         await _blobContainerClient.CreateIfNotExistsAsync();
